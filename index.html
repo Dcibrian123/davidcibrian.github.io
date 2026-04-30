@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>David Cibrian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:          #131009;
+      --bg-alt:      #1A1612;
+      --bg-lift:     #201B16;
+      --accent:      #E8622E;
+      --accent-dim:  rgba(232,98,46,0.12);
+      --text:        #EDE5D8;
+      --text-mid:    #7A6E64;
+      --text-dim:    #352B24;
+      --rule:        #272018;
+      --rule-mid:    #3A3028;
+      --max-w:       1200px;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 22px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.35s, border-color 0.35s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(19,16,9,0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom-color: var(--rule);
+    }
+    .nav-name {
+      font-family: "Playfair Display", serif;
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+    .nav-right { display: flex; align-items: center; gap: 36px; }
+    .nav-links  { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      transition: color 0.18s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-resume {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 8px 18px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-resume:hover { background: var(--accent); color: var(--bg); }
+
+    /* ── HERO ────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 58% 42%;
+      overflow: hidden;
+    }
+    .hero-left {
+      padding: 148px 64px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    .hero-left::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 18%; bottom: 18%;
+      width: 3px;
+      background: var(--accent);
+    }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 36px;
+    }
+    .hero-headline {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(4.8rem, 8.8vw, 9.5rem);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 52px;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-rule {
+      width: 52px; height: 1px;
+      background: var(--accent);
+      margin-bottom: 28px;
+    }
+    .hero-bio {
+      font-size: 0.97rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      max-width: 420px;
+      line-height: 1.9;
+      margin-bottom: 44px;
+    }
+    .hero-bio strong { color: var(--text); font-weight: 400; }
+    .hero-cta { display: flex; gap: 14px; }
+    .btn-primary {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: transparent; color: var(--accent); }
+    .btn-secondary {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: 1px solid var(--rule-mid);
+      color: var(--text-mid);
+      transition: border-color 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: var(--text-mid); color: var(--text); }
+    .hero-right {
+      position: relative;
+      border-left: 3px solid var(--accent);
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    /* ── SHARED ──────────────────────────────── */
+    section { padding: 108px 52px; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 64px;
+    }
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    #about { background: var(--bg-alt); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 54% 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 44px;
+    }
+    .about-title em { font-style: italic; color: var(--accent); }
+    .about-copy p {
+      font-size: 0.94rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.95;
+      margin-bottom: 22px;
+    }
+    .about-copy p:last-child { margin-bottom: 0; }
+    .about-copy strong { color: var(--text); font-weight: 400; }
+
+    /* stats as editorial pull-quotes */
+    .stats-col { display: flex; flex-direction: column; gap: 44px; padding-top: 4px; }
+    .pull-stat {}
+    .pull-top-rule  { height: 1px; background: var(--accent); width: 36px; margin-bottom: 18px; }
+    .pull-num {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3.2rem, 4.2vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+      letter-spacing: -0.035em;
+      margin-bottom: 14px;
+    }
+    .pull-bot-rule  { height: 1px; background: var(--rule-mid); margin-bottom: 12px; }
+    .pull-label {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+
+    /* ── WORK ────────────────────────────────── */
+    #work {}
+    .work-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+    .work-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.6rem, 4.2vw, 4rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+    .work-sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.85;
+    }
+
+    .project-list {}
+    .project-item {
+      border-top: 1px solid var(--rule);
+      padding: 52px 0;
+      display: grid;
+      grid-template-columns: 72px 1fr 200px;
+      gap: 40px;
+      align-items: start;
+    }
+    .project-item:last-child { border-bottom: 1px solid var(--rule); }
+    .project-num {
+      font-family: "Playfair Display", serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--accent);
+      padding-top: 10px;
+      letter-spacing: 0.02em;
+    }
+    .project-main {}
+    .project-category {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 18px;
+    }
+    .project-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.9rem, 3vw, 2.9rem);
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 22px;
+    }
+    .project-desc {
+      font-size: 0.87rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.9;
+      max-width: 540px;
+    }
+    .project-desc strong { color: var(--text); font-weight: 400; }
+    .project-aside { padding-top: 6px; }
+    .project-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      filter: grayscale(20%) contrast(1.05);
+      opacity: 0.85;
+    }
+
+    /* ── SKILLS ──────────────────────────────── */
+    #skills { background: var(--bg-alt); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 56px;
+    }
+    .skill-group h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 20px;
+      letter-spacing: 0.02em;
+    }
+    .pill-wrap { display: flex; flex-wrap: wrap; gap: 9px; }
+    .pill {
+      font-size: 0.76rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border: 1px solid var(--rule-mid);
+      color: var(--text-mid);
+      transition: border-color 0.18s, color 0.18s;
+      cursor: default;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── CONTACT ─────────────────────────────── */
+    #contact {}
+    .contact-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3.4rem, 6.5vw, 7rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      color: var(--text);
+      margin-bottom: 64px;
+    }
+    .contact-title em { font-style: italic; color: var(--accent); }
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--rule);
+    }
+    .contact-item {
+      padding: 28px 40px 28px 0;
+      margin-right: 40px;
+      border-right: 1px solid var(--rule);
+      transition: color 0.2s;
+    }
+    .contact-item:last-child { border-right: none; margin-right: 0; }
+    .contact-item:hover { color: var(--accent); }
+    .contact-item-label {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 6px;
+    }
+    .contact-item-val {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+    .contact-item:hover .contact-item-val { color: var(--accent); }
+
+    .resume-row {
+      margin-top: 52px;
+      padding-top: 52px;
+      border-top: 1px solid var(--rule);
+    }
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      transition: background 0.2s, color 0.2s;
+    }
+    .resume-btn:hover { background: var(--accent); color: var(--bg); }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      padding: 28px 52px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 55vw; border-left: none; border-top: 3px solid var(--accent); }
+      .hero-img { position: absolute; }
+      .hero-left { padding: 120px 36px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 56px; }
+      .work-intro { grid-template-columns: 1fr; gap: 20px; }
+      .project-item { grid-template-columns: 56px 1fr; }
+      .project-aside { display: none; }
+      .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+      section { padding: 80px 36px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section { padding: 64px 24px; }
+      .hero-left { padding: 100px 24px 52px; }
+      .contact-row { flex-direction: column; }
+      .contact-item { border-right: none; margin-right: 0; border-bottom: 1px solid var(--rule); padding: 24px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#home" class="nav-name">David Cibrian</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="David_Cibrian_Resume.pdf" download="David_Cibrian_Resume.pdf" class="nav-resume">Resume</a>
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">NYU Stern &middot; BTE &middot; Class of 2028</p>
+      <h1 class="hero-headline">
+        Building<br>
+        at the<br>
+        <em>inter</em>section<br>
+        of ideas.
+      </h1>
+      <div class="hero-rule"></div>
+      <p class="hero-bio">
+        I&#39;m David. Stern freshman who built a <strong>$310K ARR sneaker business from $100</strong>,
+        closed <strong>850+ brand deals</strong> at an AI startup, interned in
+        <strong>private equity</strong>, and competes nationally in tennis.
+        I care about GTM, early-stage investing, and what AI does to every industry it touches.
+      </p>
+      <div class="hero-cta">
+        <a href="#work"    class="btn-primary">See My Work</a>
+        <a href="#contact" class="btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img
+        class="hero-img"
+        src="images/headshot.jpg"
+        alt="David Cibrian, NYU Stern freshman, partnerships lead at Phia and venture analyst"
+      />
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">About Me</p>
+      <div class="about-grid">
+
+        <div class="about-left">
+          <h2 class="about-title">
+            From the court<br>
+            to the <em>cap table.</em>
+          </h2>
+          <div class="about-copy">
+            <p>
+              I&#39;m a freshman at <strong>NYU Stern</strong> (GPA 3.84) studying Business,
+              Technology and Entrepreneurship. Before college I attended <strong>IMG Academy</strong>,
+              one of the world&#39;s most selective boarding schools, as a nationally ranked tennis
+              player. I reached <strong>#332 in the country</strong> and competed in France, Monaco,
+              and Nicaragua.
+            </p>
+            <p>
+              I started building early. At 15 I founded <strong>HyperKickz</strong>, a sneaker
+              reselling business I grew from a $100 investment to <strong>$310K+ ARR</strong>.
+              From there I co-founded Florida&#39;s largest sneaker reselling community (200+ paid
+              subscribers, $1M+ in deals), then interned in <strong>private equity at
+              American Triple I</strong>, supporting underwriting and due diligence on early-stage
+              investments.
+            </p>
+            <p>
+              Now I&#39;m <strong>Partnerships Lead at Phia</strong> (AI shopping, backed by Phoebe
+              Gates), where I&#39;ve closed 850+ brand deals and helped open a new revenue stream
+              with their data analytics platform. I also serve as a Venture Team Analyst at SVS and
+              Investment Analyst at NYU&#39;s Blockchain and Fintech Club, evaluating startups for a
+              <strong>$200K+ fund</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="stats-col">
+          <div class="pull-stat">
+            <div class="pull-top-rule"></div>
+            <div class="pull-num">850+</div>
+            <div class="pull-bot-rule"></div>
+            <div class="pull-label">Deals closed at Phia</div>
+          </div>
+          <div class="pull-stat">
+            <div class="pull-top-rule"></div>
+            <div class="pull-num">$310K</div>
+            <div class="pull-bot-rule"></div>
+            <div class="pull-label">ARR from a $100 start</div>
+          </div>
+          <div class="pull-stat">
+            <div class="pull-top-rule"></div>
+            <div class="pull-num">#332</div>
+            <div class="pull-bot-rule"></div>
+            <div class="pull-label">National USTA ranking</div>
+          </div>
+          <div class="pull-stat">
+            <div class="pull-top-rule"></div>
+            <div class="pull-num">3.84</div>
+            <div class="pull-bot-rule"></div>
+            <div class="pull-label">GPA at NYU Stern</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="container">
+      <p class="section-label">Work &amp; Projects</p>
+      <div class="work-intro">
+        <h2 class="work-title">
+          What I&#39;ve<br>
+          been building.
+        </h2>
+        <p class="work-sub">
+          A mix of operational roles, investment work, and building from scratch.
+          Usually at the same time.
+        </p>
+      </div>
+
+      <div class="project-list">
+
+        <div class="project-item">
+          <div class="project-num">01</div>
+          <div class="project-main">
+            <span class="project-category">Partnerships &middot; Ops</span>
+            <h3 class="project-title">Phia — Partnerships Lead</h3>
+            <p class="project-desc">
+              Partnerships Lead at an AI shopping startup backed by Phoebe Gates. Prospected
+              and pitched fashion and e-commerce brands, closing 850+ deals. Led sales of
+              Phia&#39;s new data analytics platform, opening a brand-new revenue stream, and fed
+              partner feedback directly into product and GTM strategy.
+            </p>
+          </div>
+          <div class="project-aside">
+            <img class="project-img" src="images/project-1.jpg" alt="Phia AI shopping app logo" />
+          </div>
+        </div>
+
+        <div class="project-item">
+          <div class="project-num">02</div>
+          <div class="project-main">
+            <span class="project-category">Venture &middot; PE &middot; Investing</span>
+            <h3 class="project-title">Investing — PE, VC and Club Funds</h3>
+            <p class="project-desc">
+              PE Intern at <strong>American Triple I</strong>, supporting underwriting and due
+              diligence across investments, operations, and capital formation. Venture Team
+              Analyst at <strong>Strategic Venture Society</strong> (DCF, IPO analysis, precedent
+              transactions). Investment Analyst at NYU&#39;s <strong>Blockchain and Fintech
+              Club</strong>, pitching startups for a $200K+ fund.
+            </p>
+          </div>
+          <div class="project-aside">
+            <img class="project-img" src="images/project-2.jpg" alt="HOF Capital logo representing venture fund deal sourcing work" />
+          </div>
+        </div>
+
+        <div class="project-item">
+          <div class="project-num">03</div>
+          <div class="project-main">
+            <span class="project-category">Founder &middot; E-commerce</span>
+            <h3 class="project-title">HyperKickz and Florida Reselling Group</h3>
+            <p class="project-desc">
+              Founded HyperKickz at 15 and grew a sneaker resale business from a $100
+              investment to $310K+ ARR using bots, Instagram (4,500+ followers), StockX, and
+              GOAT. Co-founded Florida&#39;s largest sneaker reselling community: 200+ paid
+              subscribers and $1M+ in facilitated deals.
+            </p>
+          </div>
+          <div class="project-aside">
+            <img class="project-img" src="images/project-3.jpg" alt="NYU Stern logo" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">Skills &amp; Interests</p>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <h3>Professional</h3>
+          <div class="pill-wrap">
+            <span class="pill">GTM Strategy</span>
+            <span class="pill">Venture Sourcing</span>
+            <span class="pill">Brand Partnerships</span>
+            <span class="pill">Deal Evaluation</span>
+            <span class="pill">Business Development</span>
+            <span class="pill">Private Equity</span>
+            <span class="pill">E-commerce Strategy</span>
+            <span class="pill">DCF &amp; Financial Modeling</span>
+            <span class="pill">Public Speaking</span>
+            <span class="pill">Python</span>
+            <span class="pill">Figma</span>
+            <span class="pill">Spanish (Fluent)</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Currently Thinking About</h3>
+          <div class="pill-wrap">
+            <span class="pill">AI-Native Companies</span>
+            <span class="pill">Distribution Moats</span>
+            <span class="pill">Service Industry AI</span>
+            <span class="pill">Gen Z Brands</span>
+            <span class="pill">Founder Pedigree</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Outside Work</h3>
+          <div class="pill-wrap">
+            <span class="pill">National Tennis (#332 USTA)</span>
+            <span class="pill">Spikeball</span>
+            <span class="pill">Chess</span>
+            <span class="pill">Cologne Collecting</span>
+            <span class="pill">Food Spotting</span>
+            <span class="pill">Travel</span>
+            <span class="pill">Reading</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>On My Nightstand</h3>
+          <div class="pill-wrap">
+            <span class="pill">Zero to One</span>
+            <span class="pill">Almanack of Naval Ravikant</span>
+            <span class="pill">Poor Charlie&#39;s Almanack</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="contact-title">
+        Let&#39;s build<br>
+        <em>something.</em>
+      </h2>
+
+      <div class="contact-row">
+        <a href="mailto:david@phia.com" class="contact-item">
+          <span class="contact-item-label">Work</span>
+          <span class="contact-item-val">david@phia.com</span>
+        </a>
+        <a href="mailto:david.cibrian@stern.nyu.edu" class="contact-item">
+          <span class="contact-item-label">School</span>
+          <span class="contact-item-val">david.cibrian@stern.nyu.edu</span>
+        </a>
+        <a href="https://linkedin.com/in/davidacibrian" target="_blank" rel="noopener noreferrer" class="contact-item">
+          <span class="contact-item-label">LinkedIn</span>
+          <span class="contact-item-val">linkedin.com/in/davidacibrian</span>
+        </a>
+      </div>
+
+      <div class="resume-row">
+        <a href="David_Cibrian_Resume.pdf" download="David_Cibrian_Resume.pdf" class="resume-btn">
+          Download Resume &darr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p>David Cibrian &middot; NYU Stern BTE &middot; New York, NY</p>
+    <p>&copy; 2025</p>
+  </footer>
+
+  <script>
+    var nav = document.getElementById("navbar");
+    window.addEventListener("scroll", function () {
+      nav.classList.toggle("scrolled", window.scrollY > 60);
+    });
+  </script>
+
+</body>
+</html>
